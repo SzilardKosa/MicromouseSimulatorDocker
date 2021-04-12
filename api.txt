@@ -1,0 +1,85 @@
+API calls
+  Sensor
+    bool getFrontWall()
+    bool getLeftWall()
+    bool getRightWall()
+  Movement
+    void moveForward(int steps)
+    void turnLeft()
+    void turnRight()
+  Maze info
+    int getMazeWidth()
+    int getMazeHeight()
+    Pair<Pair<int>> getGoalArea()
+    bool isFullSize()
+  Visuals
+    Wall
+      void setWall(x, y, dir)
+      void clearWall(x, y, dir)
+    Console
+      void consoleLog(text)
+    Cell color
+      void setColor(x, y, color)
+      void clearColor(x, y)
+      void clearAllColor()
+    Cell text
+      void setText(x, y, text)
+      void clearText(x, y)
+      void clearAllText()
+
+stdout       stdin
+  fw          false     getFrontWall()
+  lw          true      getLeftWall()
+  rw          false     getRightWall()
+
+  mf 2        ack       moveForward(x)
+  tl          ack       turnLeft()
+  tr          ack       turnRight()
+
+  mw          32        getMazeWidth()
+  mh          32        getMazeHeight()
+  ga          (p1, p2)  getGoalArea()
+  if          false     isFullSize()
+
+  sw  1 1 0   ack       setWall(x, y, dir)
+  cw  1 1 0   ack       clearWall(x, y, dir)
+
+  cl text     ack       consoleLog(text)
+
+  sc  1 1 0   ack       setColor(x, y, color)
+  cc  1 1     ack       clearColor(x, y)
+  cac         ack       clearAllColor()
+
+  st  1 1 G   ack       setText(x, y, text)
+  ct  1 1     ack       clearText(x, y)
+  cat         ack       clearAllText()
+  
+API call stats (number of expected calls, with 32x32 maze, 1024 cell, spiral maze, 5*2*1024 = 10240 steps)
+  Sensor                        [3072]
+    bool getFrontWall()         - 1024
+    bool getLeftWall()          - 1024
+    bool getRightWall()         - 1024 
+  Movement                      [11520]
+    void moveForward(int steps) - 5*2*1024 = 10240
+    void turnLeft()             - 5*4*32   = 640
+    void turnRight()            - 5*4*32   = 640
+  Maze info                     [4]
+    int getMazeWidth()          - 1
+    int getMazeHeight()         - 1
+    P<P<int>> getGoalArea()     - 1 
+    bool isFullSize()           - 1
+  Visuals
+    Wall                        [3072]
+      void setWall(x, y, d)     - 1024*3
+      void clearWall(x, y, d)   - 0
+    Console                     [10240]
+      void consoleLog(text)     - 10240
+    Cell color                  [10.496.000]
+      void setColor(x, y, c)    - 10240 * 1024 = 10.485.760
+      void clearColor(x, y)     - 0
+      void clearAllColor()      - 10240
+    Cell text                   [10.496.000]
+      void setText(x, y, text)  - 10240 * 1024 = 10.485.760
+      void clearText(x, y)      - 0
+      void clearAllText()       - 10240
+  SUM [27908] vs [21.019.908]
