@@ -1,28 +1,27 @@
 import api
 
+front = api.get_front_wall()
+left = api.get_left_wall()
+right = api.get_right_wall()
 
-front = api.getFrontWall()
-left = api.getLeftWall()
-right = api.getRightWall()
+api.move_forward(1)
+api.turn_left()
+api.turn_right()
 
-api.moveForward()
-api.turnLeft()
-api.turnRight()
+height = api.get_maze_height()
+width = api.get_maze_width()
+area = api.get_goal_area()
+is_full_size = api.is_full_size()
 
-height = api.getMazeHeight()
-width = api.getMazeWidth()
-area = api.getGoalArea()
-is_full_size = api.isFullSize()
+api.set_wall(1, 1, 0)
+api.clear_wall(1, 1, 0)
 
-api.setWall(1, 1, 0)
-api.clearWall(1, 1, 0)
+api.console_log('Hello')
 
-api.consoleLog('Hello')
+api.set_color(1, 1, 0)
+api.clear_color(1, 1)
+api.clear_all_color()
 
-api.setColor(1, 1, 0)
-api.clearColor(1, 1)
-api.clearAllColor()
-
-api.setText(1, 1, 'Start')
-api.clearText(1, 1)
-api.clearAllText()
+api.set_text(1, 1, '123')
+api.clear_text(1, 1)
+api.clear_all_text()

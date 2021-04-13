@@ -1,0 +1,61 @@
+{
+  "maze": {
+    "is_full_size": false,
+    "width": 4,
+    "height": 4,
+    "maze_map": "o---o---o---o---o\n| G |           |\no   o   o   o---o\n|       |       |\no---o---o---o   o\n|               |\no   o---o---o   o\n| S |           |\no---o---o---o---o"
+  },
+  "commands": [
+    "mf",
+    "mf",
+    "mf",
+    "mf",
+    "mf 3",
+    "tl",
+    "tr",
+
+    "sw 1 1 0",
+    "cw 1 1 0",
+
+    "cl text",
+
+    "sc  1 1 0",
+    "cc  1 1",
+    "mf",
+    "mf",
+    "cac",
+
+    "st  1 1 G",
+    "ct  1 1",
+    "mf",
+    "mf",
+    "mf",
+    "cat"
+  ],
+  "processedCommands": [
+    {
+      "dir": "UP",
+      "cl": "start"
+    },
+    {
+      "dir": "UP",
+      "cl": "text"
+    },
+    {
+      "dir": "UP"
+    },
+    {
+      "sw": {
+        "x": 1,
+        "y": 1,
+        "color": 0
+      },
+      "cw": {
+        "x": 1,
+        "y": 1,
+        "color": 0
+      }
+    }
+  ],
+  "errorCode": 0
+}

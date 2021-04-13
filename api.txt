@@ -83,3 +83,22 @@ API call stats (number of expected calls, with 32x32 maze, 1024 cell, spiral maz
       void clearText(x, y)      - 0
       void clearAllText()       - 10240
   SUM [27908] vs [21.019.908]
+
+Result of the simulation
+  Movement
+    moveForward(int steps)
+    turnLeft
+    turnRight
+  Wall
+    void setWall(x, y, dir)
+    void clearWall(x, y, dir)
+  Console
+    void consoleLog(text)
+  Cell color
+    void setColor(x, y, color)
+    void clearColor(x, y)
+    void clearAllColor()
+  Cell text
+    void setText(x, y, text)
+    void clearText(x, y)
+    void clearAllText()

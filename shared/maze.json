@@ -2,5 +2,9 @@
   "is_full_size": false,
   "width": 4,
   "height": 4,
+  "goal_area": {
+    "top_left": { "x": 3, "y": 3 },
+    "bottom_right": { "x": 3, "y": 3 }
+  },
   "maze_map": "o---o---o---o---o\n| G |           |\no   o   o   o---o\n|       |       |\no---o---o---o   o\n|               |\no   o---o---o   o\n| S |           |\no---o---o---o---o"
 }

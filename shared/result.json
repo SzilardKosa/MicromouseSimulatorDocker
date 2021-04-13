@@ -1,0 +1,27 @@
+{
+  "maze": {
+    "is_full_size": false,
+    "width": 4,
+    "height": 4,
+    "goal_area": {
+      "top_left": { "x": 3, "y": 3 },
+      "bottom_right": { "x": 3, "y": 3 }
+    },
+    "maze_map": "o---o---o---o---o\n| G |           |\no   o   o   o---o\n|       |       |\no---o---o---o   o\n|               |\no   o---o---o   o\n| S |           |\no---o---o---o---o"
+  },
+  "commands": [
+    "mf",
+    "tl",
+    "tr",
+    "sw 1 1 0",
+    "cw 1 1 0",
+    "cl Hello",
+    "sc 1 1 0",
+    "cc 1 1",
+    "cac",
+    "st 1 1 123",
+    "ct 1 1",
+    "cat"
+  ],
+  "error": ""
+}

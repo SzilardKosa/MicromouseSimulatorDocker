@@ -10,84 +10,84 @@ def request(args):
 
 
 # Sensor
-def getFrontWall():
+def get_front_wall():
     return request(['fw']) == 'True'  # str to boolean
 
 
-def getLeftWall():
+def get_left_wall():
     return request(['lw']) == 'True'
 
 
-def getRightWall():
+def get_right_wall():
     return request(['rw']) == 'True'
 
 
 # Control
-def moveForward(steps=1):
+def move_forward(steps=1):
     request(['mf', steps])
 
 
-def turnLeft():
+def turn_left():
     request(['tl'])
 
 
-def turnRight():
+def turn_right():
     request(['tr'])
 
 
 # Maze info
-def getMazeWidth():
+def get_maze_width():
     return int(request(['mw']))
 
 
-def getMazeHeight():
+def get_maze_height():
     return int(request(['mh']))
 
 
-def getGoalArea():
+def get_goal_area():
     # https://www.geeksforgeeks.org/python-convert-string-to-tuple-list/
     return eval(request(['ga']))
 
 
-def isFullSize():
+def is_full_size():
     return request(['if']) == 'True'
 
 
 # Feedback: Wall
-def setWall(x, y, direction):
+def set_wall(x, y, direction):
     request(['sw', x, y, direction])
 
 
-def clearWall(x, y, direction):
+def clear_wall(x, y, direction):
     request(['cw', x, y, direction])
 
 
 # Feedback: Console
-def consoleLog(text):
+def console_log(text):
     request(['cl', text])
 
 
 # Feedback: Cell color
-def setColor(x, y, color):
+def set_color(x, y, color):
     request(['sc', x, y, color])
 
 
-def clearColor(x, y):
+def clear_color(x, y):
     request(['cc', x, y])
 
 
-def clearAllColor():
+def clear_all_color():
     request(['cac'])
 
 
 # Feedback: Cell text
-def setText(x, y, text):
+def set_text(x, y, text):
     request(['st', x, y, text])
 
 
-def clearText(x, y):
+def clear_text(x, y):
     request(['ct', x, y])
 
 
-def clearAllText():
+def clear_all_text():
     request(['cat'])
