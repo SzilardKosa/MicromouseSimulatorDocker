@@ -29,19 +29,6 @@ class Simulator:
             '^mh$': self.get_maze_height,
             '^ga$': self.get_goal_area,
             '^if$': self.is_full_size,
-            # Feedback: Wall
-            '^sw [0-9]{1,2} [0-9]{1,2} [0-3]$': self.save_with_position_check,
-            '^cw [0-9]{1,2} [0-9]{1,2} [0-3]$': self.save_with_position_check,
-            # Feedback: Console
-            '^cl ': self.save_without_check,
-            # Feedback: Cell color
-            '^sc [0-9]{1,2} [0-9]{1,2} [0-9]$': self.save_with_position_check,
-            '^cc [0-9]{1,2} [0-9]{1,2}$': self.save_with_position_check,
-            '^cac$': self.save_without_check,
-            # Feedback: Cell text
-            '^st [0-9]{1,2} [0-9]{1,2} .{1,4}$': self.save_with_position_check,
-            '^ct [0-9]{1,2} [0-9]{1,2}$': self.save_with_position_check,
-            '^cat$': self.save_without_check,
             # WRONG SYNTAX
             '.*': self.wrong_syntax
         }
@@ -56,15 +43,15 @@ class Simulator:
                                    stdout=subprocess.PIPE, bufsize=0)
         while True:
             req = process.stdout.readline()
-            print('Request: ', req)
+            # print('Request: ', req)
             if req == b'':
                 break
             res, err = self.handle_request(req.strip().decode('utf-8'))
             if err:
                 self.result['error'] = err
-                process.terminate()
+                self.force_terminate(process)
                 break
-            print('Response: ', res)
+            # print('Response: ', res)
             process.stdin.write(f'{res}\r\n'.encode('utf-8'))
         print('FINISHED')
         self.save_result()
@@ -75,6 +62,10 @@ class Simulator:
                 res, err = api_call(req)
                 break
         return res, err
+    
+    def force_terminate(self, process):
+        process.stdin.write(b'err\r\n')
+        process.wait()
 
     def save_result(self):
         with open('shared/result.json', 'w') as result_file:
@@ -161,25 +152,9 @@ class Simulator:
         res = self.maze.is_full_size
         return res, None
 
-    # Feedback: Wall, Console, Color, Text
-    def save_with_position_check(self, req):
-        self.result['commands'].append(req)
-        x, y = req.split()[1:3]
-        err = self.check_position(int(x), int(y))
-        return 'ok', err
 
-    def check_position(self, x, y):
-        err = None
-        if x > (self.maze.width - 1):
-            err = 'The \'x\' parameter is outside of the maze!'
-        if y > (self.maze.height - 1):
-            err = 'The \'y\' parameter is outside of the maze!'
-        return err
-
-    def save_without_check(self, req):
-        self.result['commands'].append(req)
-        return 'ok', None
-
-
+t0 = time.time()
 sim = Simulator()
 sim.run()
+t1 = time.time()
+print("Run time: ", t1-t0)

@@ -54,3 +54,124 @@
 
 # a = a[:, ::-1]
 # print(a)
+
+
+# Write to file
+
+# file = open('test.txt', 'w')
+import time
+
+# # write chunk, without append
+# t0 = time.time()
+# with open('test.txt', 'w') as file:
+#     chunk = 'hello\n'*2*10**7
+#     file.write(chunk)
+# t1 = time.time()
+# print("Write 'hello\\n'*2*10**7: ", t1-t0)
+
+# # write chunk, with append string
+# t0 = time.time()
+# with open('test.txt', 'w') as file:
+#     chunk = []
+#     for i in range(2*10**7):
+#         chunk.append('hello\n')
+#     file.write(''.join(chunk))
+# t1 = time.time()
+# print("Write using append: ", t1-t0)
+
+# # write in loop
+# t0 = time.time()
+# with open('test.txt', 'w') as file:
+#     for i in range(2*10**7):
+#         file.write('hello\n')
+# t1 = time.time()
+# print("Write in loop: ", t1-t0)
+
+# # writelines without append
+# t0 = time.time()
+# with open('test.txt', 'w') as file:
+#     chunk = ['hello\n']*2*10**7
+#     file.writelines(chunk)
+# t1 = time.time()
+# print("Writelines ['hello\\n']*2*10**7: ", t1-t0)
+
+# # writelines append
+# t0 = time.time()
+# with open('test.txt', 'w') as file:
+#     chunk = []
+#     for i in range(2*10**7):
+#         chunk.append('hello\n')
+#     file.writelines(chunk)
+# t1 = time.time()
+# print("Writelines using append: ", t1-t0)
+
+# # write using global var and a function
+# t0 = time.time()
+# chunk = []
+
+# def push(item):
+#     global chunk
+#     chunk.append(item)
+
+# with open('test.txt', 'w') as file:
+#     for i in range(2*10**7):
+#         push('hello\n')
+#     file.write(''.join(chunk))
+#     # file.writelines(chunk)
+# t1 = time.time()
+# print("Write using append, and global var: ", t1-t0)
+
+
+# Adding string format
+t0 = time.time()
+chunk = []
+def push(item):
+    global chunk
+    chunk.append(item)
+with open('test.txt', 'w') as file:
+    for i in range(2*10**7):
+        a = 1
+        b = 3
+        push(f'hello {a} {b}\n')
+    file.write(''.join(chunk))
+t1 = time.time()
+print("f'' formating ", t1-t0)
+
+# # Adding string format
+# t0 = time.time()
+# chunk = []
+# with open('test.txt', 'w') as file:
+#     for i in range(2*10**7):
+#         a = 1
+#         b = 3
+#         push('hello '+str(a)+' '+str(b)+' \n')
+#     file.write(''.join(chunk))
+# t1 = time.time()
+# print("+' '+ formating ", t1-t0)
+
+# # Adding percent format
+# t0 = time.time()
+# chunk = []
+# with open('test.txt', 'w') as file:
+#     for i in range(2*10**7):
+#         a = 1
+#         b = 3
+#         push('hello %s %s \n' % (a, b))
+#     file.write(''.join(chunk))
+# t1 = time.time()
+# print("pct formating ", t1-t0)
+
+# # Join format
+# t0 = time.time()
+# chunk = []
+# with open('test.txt', 'w') as file:
+#     for i in range(2*10**7):
+#         a = 1
+#         b = 3
+#         push('hello')
+#         push(str(a))
+#         push(str(b))
+#         push('\n')
+#     file.write(''.join(chunk))
+# t1 = time.time()
+# print("join formating ", t1-t0)
