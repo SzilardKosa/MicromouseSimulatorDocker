@@ -7,7 +7,7 @@ for i in range(1024):
 for i in range(1024):
     right = api.get_right_wall()
 
-for i in range(10240//2):
+for i in range(10240):
     api.move_forward(1)
     api.turn_left()
     api.turn_left()
@@ -28,18 +28,18 @@ api.clear_wall(1, 1, 0)
 for i in range(10240):
     api.console_log('Hello')
 
-# for i in range(10**7):
-#     api.set_color(1, 1, 0)
-# api.clear_color(1, 1)
-# for i in range(10240):
-#     api.clear_all_color()
+for i in range(10**7):
+    api.set_color(1, 1, 0)
+api.clear_color(1, 1)
+for i in range(10240):
+    api.clear_all_color()
 
 
-# for i in range(10**7):
-#     api.set_text(1, 1, '123')
-# api.clear_text(1, 1)
-# for i in range(10240):
-#     api.clear_all_text()
+for i in range(10**7):
+    api.set_text(1, 1, '123')
+api.clear_text(1, 1)
+for i in range(10240):
+    api.clear_all_text()
 
 
 api.save_history()

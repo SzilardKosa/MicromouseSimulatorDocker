@@ -122,20 +122,20 @@ import time
 # print("Write using append, and global var: ", t1-t0)
 
 
-# Adding string format
-t0 = time.time()
-chunk = []
-def push(item):
-    global chunk
-    chunk.append(item)
-with open('test.txt', 'w') as file:
-    for i in range(2*10**7):
-        a = 1
-        b = 3
-        push(f'hello {a} {b}\n')
-    file.write(''.join(chunk))
-t1 = time.time()
-print("f'' formating ", t1-t0)
+# # Adding string format
+# t0 = time.time()
+# chunk = []
+# def push(item):
+#     global chunk
+#     chunk.append(item)
+# with open('test.txt', 'w') as file:
+#     for i in range(2*10**7):
+#         a = 1
+#         b = 3
+#         push(f'hello {a} {b}\n')
+#     file.write(''.join(chunk))
+# t1 = time.time()
+# print("f'' formating ", t1-t0)
 
 # # Adding string format
 # t0 = time.time()
@@ -175,3 +175,28 @@ print("f'' formating ", t1-t0)
 #     file.write(''.join(chunk))
 # t1 = time.time()
 # print("join formating ", t1-t0)
+
+
+
+# import shutil
+
+# shutil.copy('shared/copyme.py', 'copyme.py')
+
+
+# matrix = [
+#   [[True, False],[True, False],[True, False]],
+#   [[True, False],[True, False],[True, False]]
+# ]
+# print(matrix)
+# print()
+# print(*matrix)
+# print()
+# print([*zip(*matrix)])
+
+# # https://stackoverflow.com/questions/4937491/matrix-transpose-in-python
+# # https://stackoverflow.com/questions/29139350/difference-between-ziplist-and-ziplist/29139418
+# tmatrix = [*zip(*matrix)]
+
+matrix = [([0,1],[2,3]), ([4,5],[6,7])]
+
+print([m[::-1] for m in matrix])

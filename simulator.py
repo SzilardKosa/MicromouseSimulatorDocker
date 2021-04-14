@@ -1,5 +1,6 @@
 import json
 import re
+import shutil
 import subprocess
 import sys
 import time
@@ -39,7 +40,8 @@ class Simulator:
         }
 
     def run(self):
-        process = subprocess.Popen([sys.executable, r'shared/main.py'], stdin=subprocess.PIPE,
+        shutil.copy('shared/main.py', 'main.py')
+        process = subprocess.Popen([sys.executable, r'main.py'], stdin=subprocess.PIPE,
                                    stdout=subprocess.PIPE, bufsize=0)
         while True:
             req = process.stdout.readline()
@@ -82,21 +84,21 @@ class Simulator:
         x = self.mouse_state['x']
         y = self.mouse_state['y']
         direction = self.mouse_state['dir']
-        res = self.maze.walls[x, y, direction]
+        res = self.maze.walls[x][y][direction]
         return res, None
 
     def get_left_wall(self, req=None):
         x = self.mouse_state['x']
         y = self.mouse_state['y']
         direction = (self.mouse_state['dir'] - 1) % 4
-        res = self.maze.walls[x, y, direction]
+        res = self.maze.walls[x][y][direction]
         return res, None
 
     def get_right_wall(self, req=None):
         x = self.mouse_state['x']
         y = self.mouse_state['y']
         direction = (self.mouse_state['dir'] + 1) % 4
-        res = self.maze.walls[x, y, direction]
+        res = self.maze.walls[x][y][direction]
         return res, None
 
     # Control

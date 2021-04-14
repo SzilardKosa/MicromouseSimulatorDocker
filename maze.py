@@ -1,5 +1,4 @@
 import json
-import numpy as np
 
 UP = 0
 RIGHT = 1
@@ -44,26 +43,25 @@ class Maze:
                 self.walls[row][col][RIGHT] = self.raw_map[right_position] == '|'
                 self.walls[row][col][DOWN] = self.raw_map[bottom_position] == '-'
                 self.walls[row][col][LEFT] = self.raw_map[left_position] == '|'
+        # transpose (1,0,2)
         # [row][col] => [col][row]
         # [yn - y0][x0 - xn] => [x0 - xn][yn - y0]
-        self.walls = np.transpose(self.walls, (1, 0, 2))
+        self.walls =  [*zip(*self.walls)]
         # reverse row indexes
-        # [yn - y0][x0 - xn] => [x0 - xn][y0 - yn]
-        self.walls = self.walls[:, ::-1, :]
+        # [x0 - xn][yn - y0] => [x0 - xn][y0 - yn]
+        self.walls = [m[::-1] for m in self.walls]
 
 
 # maze = Maze()
 
-# print(maze.walls)
-
 # # Testing cell (0,0)
-# assert maze.walls[0, 0][UP] == False
-# assert maze.walls[0, 0][RIGHT] == True
-# assert maze.walls[0, 0][DOWN] == True
-# assert maze.walls[0, 0][LEFT] == True
+# assert maze.walls[0][0][UP] == False
+# assert maze.walls[0][0][RIGHT] == True
+# assert maze.walls[0][0][DOWN] == True
+# assert maze.walls[0][0][LEFT] == True
 
 # # Testing cell (1,0)
-# assert maze.walls[1, 0][UP] == True
-# assert maze.walls[1, 0][RIGHT] == False
-# assert maze.walls[1, 0][DOWN] == True
-# assert maze.walls[1, 0][LEFT] == True
+# assert maze.walls[1][0][UP] == True
+# assert maze.walls[1][0][RIGHT] == False
+# assert maze.walls[1][0][DOWN] == True
+# assert maze.walls[1][0][LEFT] == True
