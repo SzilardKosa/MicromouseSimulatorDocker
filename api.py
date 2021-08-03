@@ -25,15 +25,18 @@ def save_history():
 
 
 # Sensor
-def get_front_wall():
+def front_wall_exists():
+    push_to_history('fw\n')
     return request(['fw']) == 'True'  # str to boolean
 
 
-def get_left_wall():
+def left_wall_exists():
+    push_to_history('lw\n')
     return request(['lw']) == 'True'
 
 
-def get_right_wall():
+def right_wall_exists():
+    push_to_history('rw\n')
     return request(['rw']) == 'True'
 
 
@@ -44,10 +47,12 @@ def move_forward(steps=1):
 
 
 def turn_left():
+    push_to_history('tl\n')
     request(['tl'])
 
 
 def turn_right():
+    push_to_history('tr\n')
     request(['tr'])
 
 

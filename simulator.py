@@ -18,9 +18,9 @@ class Simulator:
         }
         self.routes = {
             # Sensor
-            '^fw$': self.get_front_wall,
-            '^lw$': self.get_left_wall,
-            '^rw$': self.get_right_wall,
+            '^fw$': self.front_wall_exists,
+            '^lw$': self.left_wall_exists,
+            '^rw$': self.right_wall_exists,
             # Control
             '^mf [0-9]{1,2}$': self.move_forward,
             '^tl$': self.turn_left,
@@ -35,7 +35,6 @@ class Simulator:
         }
         self.result = {
             'maze': self.maze.raw_json,
-            'commands': [],
             'error': ''
         }
 
@@ -64,7 +63,7 @@ class Simulator:
                 res, err = api_call(req)
                 break
         return res, err
-    
+
     def force_terminate(self, process):
         process.stdin.write(b'err\r\n')
         process.wait()
@@ -80,21 +79,21 @@ class Simulator:
         return None, err
 
     # Sensor
-    def get_front_wall(self, req=None):
+    def front_wall_exists(self, req=None):
         x = self.mouse_state['x']
         y = self.mouse_state['y']
         direction = self.mouse_state['dir']
         res = self.maze.walls[x][y][direction]
         return res, None
 
-    def get_left_wall(self, req=None):
+    def left_wall_exists(self, req=None):
         x = self.mouse_state['x']
         y = self.mouse_state['y']
         direction = (self.mouse_state['dir'] - 1) % 4
         res = self.maze.walls[x][y][direction]
         return res, None
 
-    def get_right_wall(self, req=None):
+    def right_wall_exists(self, req=None):
         x = self.mouse_state['x']
         y = self.mouse_state['y']
         direction = (self.mouse_state['dir'] + 1) % 4
@@ -103,11 +102,10 @@ class Simulator:
 
     # Control
     def move_forward(self, req):
-        cmd, steps = req.split()
+        _, steps = req.split()
         err = None
         for _ in range(int(steps)):
-            self.result['commands'].append(cmd)
-            front_wall, _ = self.get_front_wall()
+            front_wall, _ = self.front_wall_exists()
             # if we go into a wall
             if front_wall:
                 err = 'The mouse cannot move through the walls!'
@@ -124,12 +122,10 @@ class Simulator:
             self.mouse_state['x'] += 1 if direction == RIGHT else - 1
 
     def turn_left(self, req):
-        self.result['commands'].append(req)
         self.mouse_state['dir'] = (self.mouse_state['dir'] - 1) % 4
         return 'ok', None
 
     def turn_right(self, req):
-        self.result['commands'].append(req)
         self.mouse_state['dir'] = (self.mouse_state['dir'] + 1) % 4
         return 'ok', None
 
