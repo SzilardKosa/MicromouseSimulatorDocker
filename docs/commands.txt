@@ -2,4 +2,4 @@ docker build -t my-python-simulator .
 
 (docker run --rm -it my-python-simulator)
 
-docker run --rm -it -v C:\Documents\BME\Web\React\MicromouseSimulator\simulator\shared:/usr/src/app/shared my-python-simulator
+docker run --rm -it -v C:\Documents\BME\Web\MicromouseSimulator\simulator\shared:/usr/src/app/shared my-python-simulator
