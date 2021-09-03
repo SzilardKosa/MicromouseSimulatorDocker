@@ -7,6 +7,8 @@ import time
 
 from maze import RIGHT, UP, Maze
 
+MSG_START = b'$'
+
 
 class Simulator:
     def __init__(self):
@@ -47,12 +49,17 @@ class Simulator:
 
         shutil.copy('shared/main.py', 'main.py')
         process = subprocess.Popen([sys.executable, r'main.py'], stdin=subprocess.PIPE,
-                                   stdout=subprocess.PIPE, bufsize=0)
+                                   stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=0)
         while True:
             req = process.stdout.readline()
             # print('Request: ', req)
             if req == b'':
                 break
+            elif not req.startswith(MSG_START):
+                self.save_error_msg(req, process)
+                break
+            else:
+                req = req[1:]
             res, err = self.handle_request(req.strip().decode('utf-8'))
             if err:
                 self.result['error'] = err
@@ -61,6 +68,13 @@ class Simulator:
             # print('Response: ', res)
             process.stdin.write(f'{res}\r\n'.encode('utf-8'))
         self.finish_run()
+
+    def save_error_msg(self, first_line, process):
+        error = first_line
+        self.result['error'] = first_line.decode('utf-8')
+        while error != b'':
+            error = process.stdout.readline()
+            self.result['error'] += error.decode('utf-8')
 
     def handle_request(self, req):
         for pattern, api_call in self.routes.items():

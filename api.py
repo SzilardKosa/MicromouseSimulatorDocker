@@ -1,9 +1,11 @@
 import sys
 
 history = []
+MSG_START = '$'
+
 
 def request(args):
-    msg = ' '.join([str(x) for x in args])
+    msg = MSG_START + ' '.join([str(x) for x in args])
     print(msg)
     sys.stdout.flush()
     response = sys.stdin.readline().strip()
@@ -11,13 +13,16 @@ def request(args):
         force_shutdown()
     return response
 
+
 def push_to_history(cmd):
     global history
     history.append(cmd)
 
+
 def force_shutdown():
     save_history()
     sys.exit(1)
+
 
 def save_history():
     with open('shared/history.txt', 'w') as file:
@@ -107,7 +112,7 @@ def set_text(x, y, text):
 
 
 def clear_text(x, y):
-    push_to_history(f'ct {x} {y}\n') 
+    push_to_history(f'ct {x} {y}\n')
 
 
 def clear_all_text():
