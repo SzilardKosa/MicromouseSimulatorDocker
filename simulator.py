@@ -10,7 +10,6 @@ from maze import RIGHT, UP, Maze
 
 class Simulator:
     def __init__(self):
-        self.maze = Maze('shared/maze.json')
         self.mouse_state = {
             'x': 0,
             'y': 0,
@@ -34,11 +33,18 @@ class Simulator:
             '.*': self.wrong_syntax
         }
         self.result = {
-            'maze': self.maze.raw_json,
             'error': ''
         }
 
     def run(self):
+        try:
+            self.maze = Maze('shared/maze.json')
+        except Exception as e:
+            self.result['error'] = "Couldn't parse the maze file! Exception message: " + \
+                "[" + str(e) + "]"
+            self.finish_run()
+            return
+
         shutil.copy('shared/main.py', 'main.py')
         process = subprocess.Popen([sys.executable, r'main.py'], stdin=subprocess.PIPE,
                                    stdout=subprocess.PIPE, bufsize=0)
@@ -54,8 +60,7 @@ class Simulator:
                 break
             # print('Response: ', res)
             process.stdin.write(f'{res}\r\n'.encode('utf-8'))
-        print('FINISHED')
-        self.save_result()
+        self.finish_run()
 
     def handle_request(self, req):
         for pattern, api_call in self.routes.items():
@@ -71,6 +76,10 @@ class Simulator:
     def save_result(self):
         with open('shared/result.json', 'w') as result_file:
             json.dump(self.result, result_file)
+
+    def finish_run(self):
+        print('FINISHED')
+        self.save_result()
 
     # API calls
     # Syntax error
