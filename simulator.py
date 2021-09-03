@@ -117,7 +117,12 @@ class Simulator:
             front_wall, _ = self.front_wall_exists()
             # if we go into a wall
             if front_wall:
-                err = 'The mouse cannot move through the walls!'
+                x = self.mouse_state['x']
+                y = self.mouse_state['y']
+                dir = self.mouse_state['dir']
+                err = 'The mouse cannot move through the walls! Mouse position: ' + \
+                    '[x=' + str(x) + ', y=' + str(y) + \
+                    ', dir=' + str(dir) + ']'
                 break
             else:
                 self.move_one()
