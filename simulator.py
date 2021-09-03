@@ -5,12 +5,12 @@ import subprocess
 import sys
 import time
 
-from maze import DOWN, LEFT, RIGHT, UP, Maze
+from maze import RIGHT, UP, Maze
 
 
 class Simulator:
     def __init__(self):
-        self.maze = Maze()
+        self.maze = Maze('shared/maze.json')
         self.mouse_state = {
             'x': 0,
             'y': 0,
@@ -79,21 +79,21 @@ class Simulator:
         return None, err
 
     # Sensor
-    def front_wall_exists(self, req=None):
+    def front_wall_exists(self, _=None):
         x = self.mouse_state['x']
         y = self.mouse_state['y']
         direction = self.mouse_state['dir']
         res = self.maze.walls[x][y][direction]
         return res, None
 
-    def left_wall_exists(self, req=None):
+    def left_wall_exists(self, _=None):
         x = self.mouse_state['x']
         y = self.mouse_state['y']
         direction = (self.mouse_state['dir'] - 1) % 4
         res = self.maze.walls[x][y][direction]
         return res, None
 
-    def right_wall_exists(self, req=None):
+    def right_wall_exists(self, _=None):
         x = self.mouse_state['x']
         y = self.mouse_state['y']
         direction = (self.mouse_state['dir'] + 1) % 4
@@ -121,24 +121,24 @@ class Simulator:
         else:  # RIGHT = 1, LEFT = 3
             self.mouse_state['x'] += 1 if direction == RIGHT else - 1
 
-    def turn_left(self, req):
+    def turn_left(self, _):
         self.mouse_state['dir'] = (self.mouse_state['dir'] - 1) % 4
         return 'ok', None
 
-    def turn_right(self, req):
+    def turn_right(self, _):
         self.mouse_state['dir'] = (self.mouse_state['dir'] + 1) % 4
         return 'ok', None
 
     # Maze info
-    def get_maze_width(self, req):
+    def get_maze_width(self, _):
         res = self.maze.width
         return res, None
 
-    def get_maze_height(self, req):
+    def get_maze_height(self, _):
         res = self.maze.height
         return res, None
 
-    def get_goal_area(self, req):
+    def get_goal_area(self, _):
         p1_x = self.maze.goal_area['top_left']['x']
         p1_y = self.maze.goal_area['top_left']['y']
         p2_x = self.maze.goal_area['bottom_right']['x']
@@ -146,7 +146,7 @@ class Simulator:
         res = [(p1_x, p1_y), (p2_x, p2_y)]
         return res, None
 
-    def is_full_size(self, req):
+    def is_full_size(self, _):
         res = self.maze.is_full_size
         return res, None
 

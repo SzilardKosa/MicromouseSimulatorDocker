@@ -7,8 +7,8 @@ LEFT = 3
 
 
 class Maze:
-    def __init__(self):
-        self.load_maze('shared/maze.json')
+    def __init__(self, path):
+        self.load_maze(path)
         self.parse_maze_map()
 
     def load_maze(self, path):
@@ -22,8 +22,8 @@ class Maze:
 
     def parse_maze_map(self):
         self.walls = [[[False, False, False, False]
-                       for col in range(self.width)]
-                      for row in range(self.height)]
+                       for _ in range(self.width)]
+                      for _ in range(self.height)]
         row_width = 4 * self.width + 2
         cell_width = 4
         for row in range(self.height):
@@ -46,13 +46,13 @@ class Maze:
         # transpose (1,0,2)
         # [row][col] => [col][row]
         # [yn - y0][x0 - xn] => [x0 - xn][yn - y0]
-        self.walls =  [*zip(*self.walls)]
+        self.walls = [*zip(*self.walls)]
         # reverse row indexes
         # [x0 - xn][yn - y0] => [x0 - xn][y0 - yn]
         self.walls = [m[::-1] for m in self.walls]
 
 
-# maze = Maze()
+# maze = Maze('shared/maze.json')
 
 # # Testing cell (0,0)
 # assert maze.walls[0][0][UP] == False
