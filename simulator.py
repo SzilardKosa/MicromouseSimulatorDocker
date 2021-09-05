@@ -3,6 +3,7 @@ import re
 import shutil
 import subprocess
 import sys
+import os
 import time
 
 from maze import RIGHT, UP, Maze
@@ -47,9 +48,14 @@ class Simulator:
             self.finish_run()
             return
 
-        shutil.copy('shared/main.py', 'main.py')
-        process = subprocess.Popen([sys.executable, r'main.py'], stdin=subprocess.PIPE,
-                                   stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=0)
+        try:
+            process = self.start_process()
+        except Exception as e:
+            self.result['error'] = "Couldn't start the algorithm code! Exception message: " + \
+                "[" + str(e) + "]"
+            self.finish_run()
+            return
+
         while True:
             req = process.stdout.readline()
             # print('Request: ', req)
@@ -68,6 +74,30 @@ class Simulator:
             # print('Response: ', res)
             process.stdin.write(f'{res}\r\n'.encode('utf-8'))
         self.finish_run()
+
+    def start_process(self):
+        if os.path.exists('build'):
+            shutil.rmtree('build')
+        os.mkdir('build')
+
+        if os.path.exists('shared/main.py'):
+            shutil.copy('shared/main.py', 'build/main.py')
+            shutil.copy('apis/python/api.py', 'build/api.py')
+            process = subprocess.Popen([sys.executable, r'build/main.py'], stdin=subprocess.PIPE,
+                                       stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=0)
+        elif os.path.exists('shared/main.cpp'):
+            shutil.copy('shared/main.cpp', 'build/main.cpp')
+            shutil.copy('apis/cpp/api.h', 'build/api.h')
+            shutil.copy('apis/cpp/api.cpp', 'build/api.cpp')
+            if os.system('g++ -o build/app build/main.cpp build/api.cpp') != 0:
+                raise Exception('Build was unsuccessful!')
+            process = subprocess.Popen([r'build/app.exe'], stdin=subprocess.PIPE,
+                                       stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=0)
+        else:
+            raise Exception(
+                'The file is missing or the programming language is not supported!')
+
+        return process
 
     def save_error_msg(self, first_line, process):
         error = first_line
@@ -171,8 +201,7 @@ class Simulator:
         p1_y = self.maze.goal_area['top_left']['y']
         p2_x = self.maze.goal_area['bottom_right']['x']
         p2_y = self.maze.goal_area['bottom_right']['y']
-        res = [(p1_x, p1_y), (p2_x, p2_y)]
-        return res, None
+        return f'{p1_x} {p1_y} {p2_x} {p2_y}', None
 
     def is_full_size(self, _):
         res = self.maze.is_full_size

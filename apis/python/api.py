@@ -71,8 +71,21 @@ def get_maze_height():
 
 
 def get_goal_area():
-    # https://www.geeksforgeeks.org/python-convert-string-to-tuple-list/
-    return eval(request(['ga']))
+    response = request(['ga'])
+    values = response.split()
+    goal_area = {
+        "top_left":
+        {
+            "x": values[0],
+            "y": values[1]
+        },
+        "bottom_right":
+        {
+            "x": values[2],
+            "y": values[3]
+        }
+    },
+    return goal_area
 
 
 def is_full_size():
