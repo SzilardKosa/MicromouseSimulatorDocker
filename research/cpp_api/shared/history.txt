@@ -1,0 +1,16 @@
+fw
+lw
+rw
+mf 1
+mf 2
+tl
+tr
+sw 1 2 3
+cw 1 2 3
+cl eyyo
+sc 1 2 3
+cc 1 2
+cac
+st 1 2 chiao
+ct 1 2
+cat
