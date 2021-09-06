@@ -91,7 +91,7 @@ class Simulator:
             shutil.copy('apis/cpp/api.cpp', 'build/api.cpp')
             if os.system('g++ -o build/app build/main.cpp build/api.cpp') != 0:
                 raise Exception('Build was unsuccessful!')
-            process = subprocess.Popen([r'build/app.exe'], stdin=subprocess.PIPE,
+            process = subprocess.Popen([r'build/app'], stdin=subprocess.PIPE,
                                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=0)
         else:
             raise Exception(
