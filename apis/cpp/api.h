@@ -3,7 +3,6 @@
 #define API_H
 
 #include <string>
-#include <vector>
 
 struct Cell
 {
@@ -20,7 +19,7 @@ struct GoalArea
 class Api {
 private:
   static char const MSG_START = '$';
-  static std::vector<std::string> history;
+  static std::string history;
   static std::string request(const std::string &cmd);
   static void pushToHistory(const std::string &cmd);
   static void forceShutdown();

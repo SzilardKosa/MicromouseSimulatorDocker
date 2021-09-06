@@ -2,12 +2,11 @@
 
 #include <iostream>
 #include <fstream>
-#include <vector>
 #include <string>
 #include <sstream>
 #include <stdlib.h>
 
-std::vector<std::string> Api::history;
+std::string Api::history;
 
 std::string Api::request(const std::string &cmd) {
   std::cout << MSG_START << cmd;
@@ -19,7 +18,7 @@ std::string Api::request(const std::string &cmd) {
 }
 
 void Api::pushToHistory(const std::string &cmd){
-  history.push_back(cmd);
+  history += cmd;
 }
 
 void Api::forceShutdown(){
@@ -29,8 +28,7 @@ void Api::forceShutdown(){
 
 void Api::saveHistory(){
   std::ofstream fout("shared/history.txt");
-  for(auto const& x : history)
-    fout << x;
+  fout << history;
 }
 
 // Sensor
