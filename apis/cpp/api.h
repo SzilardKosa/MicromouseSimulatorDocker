@@ -23,10 +23,9 @@ private:
   static std::string request(const std::string &cmd);
   static void pushToHistory(const std::string &cmd);
   static void forceShutdown();
-
-public:
   static void saveHistory();
 
+public:
   // Sensor
   static bool frontWallExists();
   static bool leftWallExists();
@@ -43,22 +42,14 @@ public:
   static GoalArea getGoalArea();
   static bool isFullSize();
 
-  // Feedback: Wall
-  static void setWall(int x, int y, char direction);
-  static void clearWall(int x, int y, char direction);
-
   // Feedback: Console
   static void consoleLog(const std::string &text);
 
-  // Feedback: Cell color
-  static void setColor(int x, int y, char color);
-  static void clearColor(int x, int y);
-  static void clearAllColor();
-
   // Feedback: Cell text
-  static void setText(int x, int y, const std::string& text);
-  static void clearText(int x, int y);
-  static void clearAllText();
+  static void setCellText(int x, int y, const std::string& text);
+
+  // Stop simulation
+  static void stopSimulation();
 };
 
 #endif // API_H

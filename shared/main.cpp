@@ -11,7 +11,7 @@ int main(int argc, char* argv[]) {
     bool isLeft = Api::leftWallExists();
     bool isRight = Api::rightWallExists();
   }
-  
+
   // Control
   for (int i = 0; i < 10240/2; i++)
   {
@@ -30,38 +30,16 @@ int main(int argc, char* argv[]) {
   int height = Api::getMazeHeight();
   GoalArea ga = Api::getGoalArea();
   bool isFullSize = Api::isFullSize();
-
-  // Feedback: wall
-  for (int i = 0; i < 3072; i++)
-  {
-    Api::setWall(1, 2, 3);
-  }
-  Api::clearWall(1, 2, 3);
   // Feedback: console
   for (int i = 0; i < 10240; i++)
   {
     Api::consoleLog("Hello");
   }
-  // Feedback: cell color
-  for (int i = 0; i < 1e7; i++)
-  {
-    Api::setColor(1, 2, 3);
-  }
-  Api::clearColor(1, 2);
-  for (int i = 0; i < 10240; i++)
-  {
-    Api::clearAllColor();
-  }
   // Feedback: cell text
   for (int i = 0; i < 1e7; i++)
   {
-    Api::setText(1, 2, "123");
-  }
-  Api::clearText(1, 2);
-  for (int i = 0; i < 10240; i++)
-  {
-    Api::clearAllText();
+    Api::setCellText(1, 2, "123");
   }
 
-  Api::saveHistory();
+  Api::stopSimulation();
 }

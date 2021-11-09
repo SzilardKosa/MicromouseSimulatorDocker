@@ -60,13 +60,16 @@ class Simulator:
             req = process.stdout.readline()
             # print('Request: ', req)
             if req == b'':
+                self.result['error'] = "The results were not saved. The program finished without an explicit stop simulation call."
                 break
             elif not req.startswith(MSG_START):
                 self.save_error_msg(req, process)
                 break
-            else:
-                req = req[1:]
-            res, err = self.handle_request(req.strip().decode('utf-8'))
+            req = req[1:].strip().decode('utf-8')
+            if req == "ss":
+                self.force_terminate(process)
+                break
+            res, err = self.handle_request(req)
             if err:
                 self.result['error'] = err
                 self.force_terminate(process)
@@ -114,7 +117,7 @@ class Simulator:
         return res, err
 
     def force_terminate(self, process):
-        process.stdin.write(b'err\r\n')
+        process.stdin.write(b'end\r\n')
         process.wait()
 
     def save_result(self):

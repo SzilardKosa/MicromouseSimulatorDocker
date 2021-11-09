@@ -12,7 +12,7 @@ std::string Api::request(const std::string &cmd) {
   std::cout << MSG_START << cmd;
   std::string response;
   std::getline(std::cin, response);
-  if (response == "err")
+  if (response == "end")
     forceShutdown();
   return response;
 }
@@ -86,24 +86,6 @@ bool Api::isFullSize(){
 }
 
 
-// Feedback: Wall
-void Api::setWall(int x, int y, char direction){
-  std::string cmd = "sw " +
-  std::to_string(x) + " " +
-  std::to_string(y)+ " " +
-  std::to_string(direction) + "\n";
-  pushToHistory(cmd);
-}
-
-void Api::clearWall(int x, int y, char direction){
-  std::string cmd = "cw " +
-  std::to_string(x) + " " +
-  std::to_string(y)+ " " +
-  std::to_string(direction) + "\n";
-  pushToHistory(cmd);
-}
-
-
 // Feedback: Console
 void Api::consoleLog(const std::string &text){
   std::string cmd = "cl " + text + "\n";
@@ -111,29 +93,8 @@ void Api::consoleLog(const std::string &text){
 }
 
 
-// Feedback: Cell color
-void Api::setColor(int x, int y, char color){
-  std::string cmd = "sc " +
-  std::to_string(x) + " " +
-  std::to_string(y)+ " " +
-  std::to_string(color) + "\n";
-  pushToHistory(cmd);
-}
-
-void Api::clearColor(int x, int y){
-  std::string cmd = "cc " +
-  std::to_string(x) + " " +
-  std::to_string(y)+ "\n";
-  pushToHistory(cmd);
-}
-
-void Api::clearAllColor(){
-  pushToHistory("cac\n");
-}
-
-
 // Feedback: Cell text
-void Api::setText(int x, int y, const std::string& text){
+void Api::setCellText(int x, int y, const std::string& text){
   std::string cmd = "st " +
   std::to_string(x) + " " +
   std::to_string(y)+ " " +
@@ -141,13 +102,7 @@ void Api::setText(int x, int y, const std::string& text){
   pushToHistory(cmd);
 }
 
-void Api::clearText(int x, int y){
-  std::string cmd = "ct " +
-  std::to_string(x) + " " +
-  std::to_string(y)+ "\n";
-  pushToHistory(cmd);
-}
-
-void Api::clearAllText(){
-  pushToHistory("cat\n");
+// Stop simulatioon
+void Api::stopSimulation(){
+  request("ss\n");
 }

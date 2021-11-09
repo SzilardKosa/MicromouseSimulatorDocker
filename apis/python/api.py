@@ -9,7 +9,7 @@ def request(args):
     print(msg)
     sys.stdout.flush()
     response = sys.stdin.readline().strip()
-    if response == 'err':
+    if response == 'end':
         force_shutdown()
     return response
 
@@ -92,41 +92,16 @@ def is_full_size():
     return request(['if']) == 'True'
 
 
-# Feedback: Wall
-def set_wall(x, y, direction):
-    push_to_history(f'sw {x} {y} {direction}\n')
-
-
-def clear_wall(x, y, direction):
-    push_to_history(f'cw {x} {y} {direction}\n')
-
-
 # Feedback: Console
 def console_log(text):
     push_to_history(f'cl {text}\n')
 
 
-# Feedback: Cell color
-def set_color(x, y, color):
-    push_to_history(f'sc {x} {y} {color}\n')
-
-
-def clear_color(x, y):
-    push_to_history(f'cc {x} {y}\n')
-
-
-def clear_all_color():
-    push_to_history('cac\n')
-
-
 # Feedback: Cell text
-def set_text(x, y, text):
+def set_cell_text(x, y, text):
     push_to_history(f'st {x} {y} {text}\n')
 
 
-def clear_text(x, y):
-    push_to_history(f'ct {x} {y}\n')
-
-
-def clear_all_text():
-    push_to_history('cat\n')
+# Stop simulation
+def stop_simulation():
+    request(['ss'])
