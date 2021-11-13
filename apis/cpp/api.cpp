@@ -12,6 +12,8 @@ std::string Api::request(const std::string &cmd) {
   std::cout << MSG_START << cmd;
   std::string response;
   std::getline(std::cin, response);
+  if (response.back() == '\r')
+    response.pop_back();
   if (response == "end")
     forceShutdown();
   return response;
