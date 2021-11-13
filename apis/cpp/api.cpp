@@ -25,7 +25,7 @@ void Api::pushToHistory(const std::string &cmd){
 
 void Api::forceShutdown(){
   saveHistory();
-  exit(1);
+  exit(0);
 }
 
 void Api::saveHistory(){

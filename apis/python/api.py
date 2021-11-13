@@ -21,7 +21,7 @@ def push_to_history(cmd):
 
 def force_shutdown():
     save_history()
-    sys.exit(1)
+    sys.exit(0)
 
 
 def save_history():
