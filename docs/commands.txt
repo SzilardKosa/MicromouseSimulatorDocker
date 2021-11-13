@@ -1,8 +1,10 @@
 docker build -t my-python-simulator .
 docker build -t my-python-simulator -f Dockerfile.python_lang .
 docker build -t my-cpp-simulator -f Dockerfile.cpp_lang .
+docker build -t my-c-simulator -f Dockerfile.c_lang .
 
 (docker run --rm -it my-python-simulator)
 
 docker run --rm -it -v C:\Documents\BME\Web\MicromouseSimulator\simulator\shared:/usr/src/app/shared my-python-simulator
 docker run --rm -it -v C:\Documents\BME\Web\MicromouseSimulator\simulator\shared:/usr/src/app/shared my-cpp-simulator
+docker run --rm -it -v C:\Documents\BME\Web\MicromouseSimulator\simulator\shared:/usr/src/app/shared my-c-simulator

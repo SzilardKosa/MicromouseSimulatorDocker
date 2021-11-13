@@ -96,6 +96,14 @@ class Simulator:
                 raise Exception('Build was unsuccessful!')
             process = subprocess.Popen([r'build/app'], stdin=subprocess.PIPE,
                                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=0)
+        elif os.path.exists('shared/main.c'):
+            shutil.copy('shared/main.c', 'build/main.c')
+            shutil.copy('apis/c/api.h', 'build/api.h')
+            shutil.copy('apis/c/api.c', 'build/api.c')
+            if os.system('gcc -o build/app build/main.c build/api.c') != 0:
+                raise Exception('Build was unsuccessful!')
+            process = subprocess.Popen([r'build/app'], stdin=subprocess.PIPE,
+                                       stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=0)
         else:
             raise Exception(
                 'The file is missing or the programming language is not supported!')

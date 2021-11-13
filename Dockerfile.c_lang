@@ -1,0 +1,12 @@
+FROM python:3.8-alpine
+
+RUN set -ex && \
+    apk add --no-cache g++
+
+WORKDIR /usr/src/app
+
+COPY maze.py .
+COPY simulator.py .
+COPY apis apis/
+
+CMD [ "python", "./simulator.py" ]
