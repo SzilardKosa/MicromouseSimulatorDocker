@@ -58,7 +58,6 @@ class Simulator:
 
         while True:
             req = process.stdout.readline()
-            # print('Request: ', req)
             if req == b'':
                 self.result['error'] = "The results were not saved. The program finished without an explicit stop simulation call."
                 break
@@ -74,7 +73,6 @@ class Simulator:
                 self.result['error'] = err
                 self.force_terminate(process)
                 break
-            # print('Response: ', res)
             process.stdin.write(f'{res}\r\n'.encode('utf-8'))
         self.finish_run()
 
